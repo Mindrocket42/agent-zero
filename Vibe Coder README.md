@@ -72,24 +72,28 @@ Think of an agent as a loop:
 
 ```mermaid
 graph TD
-    A[User Input / Task] --> B{Agent 0 (Main)};
-    B --> C[Think & Plan (LLM)];
-    C --> D{Use Tools?};
-    D -- Yes --> E[Execute Tool (Search, Code, Memory, Browser, Sub-Agent...)];
-    E --> F[Get Tool Result];
-    F --> B;
-    D -- No --> G[Formulate Response (LLM)];
-    G --> H[Output to User / Superior Agent];
+    A["User Input / Task"] --> B{"Agent 0 (Main)"}
+    B --> C["Think & Plan (LLM)"]
+    C --> D{"Use Tools?"}
+    D -- Yes --> E["Execute Tool (Search, Code, Memory, Browser, Sub-Agent...)"]
+    E --> F["Get Tool Result"]
+    F --> B
+    D -- No --> G["Formulate Response (LLM)"]
+    G --> H["Output to User / Superior Agent"]
 
     subgraph Tools
-        T1[Web Search]
-        T2[Code Execution]
-        T3[Memory R/W]
-        T4[Web Browser]
-        T5[Delegate to Sub-Agent]
+        T1["Web Search"]
+        T2["Code Execution"]
+        T3["Memory R/W"]
+        T4["Web Browser"]
+        T5["Delegate to Sub-Agent"]
     end
 
-    E --> T1 & T2 & T3 & T4 & T5;
+    E --> T1
+    E --> T2
+    E --> T3
+    E --> T4
+    E --> T5
 
     style A fill:#cceeff,stroke:#333333,color:#111111
     style B fill:#bbf7d0,stroke:#333333,color:#111111
@@ -100,6 +104,7 @@ graph TD
     style G fill:#fffacd,stroke:#333333,color:#111111
     style H fill:#cceeff,stroke:#333333,color:#111111
     style Tools fill:#eeeeee,stroke:#333333,color:#111111
+
 ```
 
 *This diagram shows the basic loop. Agents can call other agents, creating complex collaboration.*
