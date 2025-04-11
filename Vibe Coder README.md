@@ -226,7 +226,7 @@ flowchart TD
 
     B -- Docker --> I[Install Docker Desktop];
     I --> J[Pull Docker Image];
-    J --> K[Run Docker Container (with API Key)];
+    J --> K["Run Docker Container (with API Key)"];
     K --> L[Ready to Access via Web UI!];
 
     style A fill:#eeeeee,stroke:#333333,color:#111111
