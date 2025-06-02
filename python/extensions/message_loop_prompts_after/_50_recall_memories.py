@@ -8,7 +8,7 @@ DATA_NAME_TASK = "_recall_memories_task"
 class RecallMemories(Extension):
 
     INTERVAL = 3
-    HISTORY = 5  # TODO cleanup
+    HISTORY = 10000
     RESULTS = 3
     THRESHOLD = 0.6
 
@@ -27,7 +27,7 @@ class RecallMemories(Extension):
     async def search_memories(self, loop_data: LoopData, **kwargs):
 
         # cleanup
-        extras = loop_data.extras_temporary
+        extras = loop_data.extras_persistent
         if "memories" in extras:
             del extras["memories"]
 
@@ -47,7 +47,7 @@ class RecallMemories(Extension):
         # msgs_text = self.agent.concat_messages(
         #     self.agent.history[-RecallMemories.HISTORY :]
         # )  # only last X messages
-        msgs_text = self.agent.history.current.output_text()
+        msgs_text = self.agent.history.output_text()[-RecallMemories.HISTORY:]
         system = self.agent.read_prompt(
             "memory.memories_query.sys.md", history=msgs_text
         )
@@ -101,7 +101,7 @@ class RecallMemories(Extension):
         # append to prompt
         extras["memories"] = memories_prompt
 
-    # except Exception as e:
+    # except Exception as e:čč
     #     err = errors.format_error(e)
     #     self.agent.context.log.log(
     #         type="error", heading="Recall memories extension error:", content=err
